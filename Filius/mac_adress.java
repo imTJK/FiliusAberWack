@@ -7,5 +7,4 @@ public class mac_adress {
     public mac_adress(){
         
     }
-
 }
