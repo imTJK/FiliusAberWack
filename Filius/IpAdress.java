@@ -1,27 +1,24 @@
 package Filius;
 
 
-public class ip_adress {
+
+public class IpAdress {
     private String[] ip;
     private String network_class;
 
 
-    private boolean intInRange(int val, int min, int max){
-        return (val >= min) && (val <= max);
-    }
-
     private String getNetworkClass(String oct){
         //gotta get cleaner
+        
         int _oct = Integer.parseInt(oct);
-        if(intInRange(_oct, 0, 127)){return "A";}
-        else if(intInRange(_oct, 128, 191)){return "B";}
-        else if(intInRange(_oct, 192, 223)){return "C";}
-        else if(intInRange(_oct, 224, 239)){return "D";}
+        if(Utilities.intInRange(_oct, 0, 127)){return "A";}
+        else if(Utilities.intInRange(_oct, 128, 191)){return "B";}
+        else if(Utilities.intInRange(_oct, 192, 223)){return "C";}
+        else if(Utilities.intInRange(_oct, 224, 239)){return "D";}
         else {return "E";}
     }
 
-
-    public ip_adress(String adress){
+    public IpAdress(String adress){
         String[] split_adr = adress.split("\\.");
         if(split_adr.length == 4){
            for(int i = 0; i < 4; i++){
@@ -41,7 +38,7 @@ public class ip_adress {
     }
 
 
-    public String[] getIp() {
+    public String[] getAdress() {
         return ip;
     }
     

@@ -2,17 +2,15 @@ package Filius;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class computer {
+public class Computer extends FiliusObject{
     private String name;
-    private ip_adress IP;
-    private ip_adress subnetmask;
+    private IpAdress IP;
+    private IpAdress subnetmask;
 
-
-    private network_switch n_switch = null;
-
-    public computer(String IP, String subnetmask, String name){
-        this.IP = new ip_adress(IP);
-        this.subnetmask = new ip_adress(subnetmask);
+    public Computer(String ip, String subnetmask, String name){
+        super("computer");
+        this.IP = new IpAdress(ip);
+        this.subnetmask = new IpAdress(subnetmask);
         this.name = name;
     }
 }

@@ -1,0 +1,92 @@
+Cable:
+   Class<?>[] allowed_classes = {computer.class, network_switch.class};
+    Object[] connnected_to = new Object[2];
+
+
+    private boolean array_contains(Class<?>[] array, Object o){
+        for(Class<?> c : array){
+            if(c.getClass() == o.getClass()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public cable(Object o1, Object o2){
+        if(array_contains(allowed_classes, o1) && array_contains(allowed_classes, o2)){
+            this.connnected_to[0] = o1;
+            this.connnected_to[1] = o2;
+        }
+    }
+
+    public Object[] getConnnections() {
+        return connnected_to;
+    }
+
+
+Properties:
+public class Properties {
+    public Boolean objectHasProperty(Object obj, String propertyName){
+        List<Field> properties = getAllFields(obj);
+        for(Field field : properties){
+            if(field.getName().equalsIgnoreCase(propertyName)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private static List<Field> getAllFields(Object obj){
+        List<Field> fields = new ArrayList<Field>();
+        getAllFieldsRecursive(fields, obj.getClass());
+        return fields;
+    }
+    
+    private static List<Field> getAllFieldsRecursive(List<Field> fields, Class<?> type) {
+        for (Field field: type.getDeclaredFields()) {
+            fields.add(field);
+        }
+    
+        if (type.getSuperclass() != null) {
+            fields = getAllFieldsRecursive(fields, type.getSuperclass());
+        }
+    
+        return fields;
+    }
+}
+
+
+Network:
+package Filius;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+public class Network {
+    private ArrayList<Computer> participants;
+    private ArrayList<network_switch> switches; 
+
+
+    private void getType(Object o){
+        try {
+            Computer user = (Computer) o;
+            this.participants.add(user);
+        } catch (Exception error_one) {
+          try {
+            Network_Switch n_switch = (Network_Switch) o;
+            this.switches.add(n_switch);
+          }  
+          catch (Exception error_two){
+            throw new Error("Object is neither Computer nor Network-Switch");
+          }
+        }
+    }
+
+    public void addObject(Object o){
+       
+    }
+
+    public void removeObject(Object o){
+        
+    }
+}

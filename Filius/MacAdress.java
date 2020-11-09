@@ -1,10 +1,10 @@
 package Filius;
 
-public class mac_adress {
+public class MacAdress {
     private String[] herstellerkennung;
     private String[] gerätekennung;
 
-    public mac_adress(){
-        
+    public MacAdress(){
+        //
     }
 }
