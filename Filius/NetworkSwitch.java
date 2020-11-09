@@ -13,7 +13,6 @@ public class NetworkSwitch extends FiliusObject{
     }
 
 
-
     public static boolean verifyNetwork(IpAdress ip1, IpAdress snm1, IpAdress ip2, IpAdress snm2){
         if(snm1.getAdress() == snm2.getAdress()) {
             //subnetmasks are the same

@@ -12,12 +12,25 @@ public class FiliusObject {
         if(Utilities.check_array_for(type.toLowerCase(), allowed_types)){
             this.type = type.toLowerCase();
         }
-        //empty Entity used for classifying
     }
 
     public void connectTo(FiliusObject o){
-        if(!this.type.equals("computer")){
-            this.connections.add(new Cable(this, o));
+        if(this.type.equals("computer")){
+            if(this.connections.size() <= 1){
+                this.connections.add(new Cable(this, o));
+            }
+            else{
+                Debugger.log("This Computer already has an established Connection");
+            }
         }
+        else{this.connections.add(new Cable(this, o));}
+    }
+
+    public void disconnectFrom(FiliusObject o){
+        Cable tempCable = new Cable(this, o);  
+        if(this.connections.contains(tempCable)){
+            this.connections.remove(tempCable);
+        }
+        else{Debugger.log("No established Connection found");}
     }
 }
