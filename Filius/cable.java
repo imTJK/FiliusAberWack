@@ -9,4 +9,8 @@ public class Cable{
         this.connectedTo[0] = o1;
         this.connectedTo[1] = o2;
     }
+
+    public FiliusObject[] getConnectedTo(){
+        return connectedTo;
+    }
 }

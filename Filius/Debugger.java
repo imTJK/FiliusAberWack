@@ -20,7 +20,6 @@ public class Debugger {
     }
 
 
-
     public static void log(Object o){
         if(Debugger.isEnabled()) {
             System.out.println(o.toString());

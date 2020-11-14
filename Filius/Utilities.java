@@ -10,6 +10,16 @@ public class Utilities {
         return false;
     }
 
+    public static String arrayToString(Object[] oA){
+        String _tempString = "";
+        for(Object o : oA){
+            _tempString += o.toString() + ", ";
+        }
+        return _tempString;
+    }
+
+
+
     public static boolean intInRange(int val, int min, int max){
         return (val >= min) && (val <= max);
     }

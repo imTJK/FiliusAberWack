@@ -3,19 +3,19 @@ package Filius;
 
 
 public class IpAdress {
-    private String[] ip;
-    private String network_class;
+    private String[] ip = new String[4];
+    private char network_class;
 
 
-    private String getNetworkClass(String oct){
+    private char getNetworkClass(String oct){
         //gotta get cleaner
         
         int _oct = Integer.parseInt(oct);
-        if(Utilities.intInRange(_oct, 0, 127)){return "A";}
-        else if(Utilities.intInRange(_oct, 128, 191)){return "B";}
-        else if(Utilities.intInRange(_oct, 192, 223)){return "C";}
-        else if(Utilities.intInRange(_oct, 224, 239)){return "D";}
-        else {return "E";}
+        if(Utilities.intInRange(_oct, 0, 127)){return 'A';}
+        else if(Utilities.intInRange(_oct, 128, 191)){return 'B';}
+        else if(Utilities.intInRange(_oct, 192, 223)){return 'C';}
+        else if(Utilities.intInRange(_oct, 224, 239)){return 'D';}
+        else {return 'E';}
     }
 
     public IpAdress(String adress){
@@ -42,7 +42,7 @@ public class IpAdress {
         return ip;
     }
     
-    public String getNetwork_class() {
+    public char getNetwork_class() {
         return network_class;
     }
 }
