@@ -1,6 +1,5 @@
 package Filius;
 
-
 //kinda useless atm, but good for visibility
 public class Cable{
     FiliusObject[] connectedTo = new FiliusObject[2];

@@ -4,7 +4,7 @@ public class Debugger {
     private static boolean isActive = true;
 
     private Debugger(){
-        //empty as to deter misuse
+        //empty as to deter misuse ...and IntelliCode from bothering me
     }
 
     public static void enable(){
@@ -26,3 +26,4 @@ public class Debugger {
         }           
     }
 }
+//Tjorven stinkt

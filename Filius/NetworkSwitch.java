@@ -1,33 +1,85 @@
 package Filius;
 
+import java.lang.invoke.TypeDescriptor.OfMethod;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+
+
+import java.util.AbstractMap.SimpleEntry;
 
 
 public class NetworkSwitch extends FiliusObject{
     private int ports;
-    
-    private Map<IpAdress, MacAdress>[] SAT;
+    private Map<MacAdress, Entry<IpAdress, Integer>> SAT = new HashMap<>();
+
+
+    private int nextPort = 1;
 
     public NetworkSwitch(int ports){
         super("network_switch");
         this.ports = ports;
     }
 
-
-    public static boolean verifyNetwork(IpAdress ip1, IpAdress snm1, IpAdress ip2, IpAdress snm2){
-        if(snm1.getAdress() == snm2.getAdress()) {
-            //subnetmasks are the same
-            int n1 = 256 - Integer.parseInt(snm1.getOct(3));
-            
-            int n_index = Integer.parseInt(ip1.getOct(3)) / n1;
-            
-            return (Integer.parseInt(ip2.getOct(3)) < n1 * n_index + 1 && Integer.parseInt(ip2.getOct(3)) > n1 * n_index);
+    public void getConnected(){
+        for (Cable c : this.getConnections()){
+            for (FiliusObject o : c.getConnectedTo()){
+                if (o.type.equals("computer")){
+                    Computer _tempPC = (Computer) o;
+                    if(!SAT.containsKey(_tempPC.getMacAdress())){
+                        SAT.put(_tempPC.getMacAdress(), new SimpleEntry<>(_tempPC.getIP(), this.nextPort));
+                        this.nextPort++;
+                        }
+                    }
+                }
+            }
         }
-        else return false;
-    }
 
+
+    public FiliusObject sendSignal(MacAdress m, FiliusObject origin){
+    
+        if (this.SAT.containsKey(m) && m.getBelongingTo() != origin){
+            return m.getBelongingTo();
+        }
+    
+        for(Cable c: this.getConnections()){
+            for(FiliusObject o : c.getConnectedTo()){
+                if(o.type.equals("computer")){
+                    Computer _tempPC = (Computer) o;
+                    if(_tempPC.getMacAdress().macAdressToString().equals(m.macAdressToString())){
+                        this.SAT.put(m, new SimpleEntry<>(_tempPC.getIP(), this.nextPort));
+                        this.nextPort++;
+                        return o;
+                    }
+                    else if(o.type.equals("network_switch") && o != this.getSelf()){
+                        NetworkSwitch _tempSwitch = (NetworkSwitch) o;
+                        return _tempSwitch.sendSignal(m, this.getSelf());
+                    }
+                }
+            }
+        }
+        return null;
+        }
+    
+    public void SATAnzeigen(){
+        for(Map.Entry<MacAdress, Entry<IpAdress, Integer>> entry : SAT.entrySet()){
+            Debugger.log(String.format("Port: %1$s - Mac-Adress: %2$s, Ip-Adress: %3$s", entry.getValue().getValue(), entry.getKey().macAdressToString(), entry.getValue().getKey().getAdressString()));
+        }
+    }
 
     public int getPorts() {
         return ports;
+    }
+
+
+    public IpAdress getIP(IpAdress targetIp){
+        for(Map.Entry<MacAdress, Entry<IpAdress, Integer>> entry : SAT.entrySet()){
+            String ipString = entry.getValue().getKey().getAdressString();
+            if(ipString.equals(targetIp.getAdressString())){
+                return entry.getValue().getKey();
+            }
+        }
+        return null;
     }
 }

@@ -9,6 +9,13 @@
             "name": "CodeLens (Launch) - demo",
             "request": "launch",
             "mainClass": "demo",
+            "projectName": "FiliusAberWack_6ede4856"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - demo",
+            "request": "launch",
+            "mainClass": "demo",
             "projectName": "FiliusAberWack_e2b03577"
         },
         {
